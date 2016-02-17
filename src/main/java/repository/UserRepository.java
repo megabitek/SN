@@ -5,9 +5,11 @@
  */
 package repository;
 
+import entity.Role;
 import entity.Users;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import javax.annotation.Resource;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -80,4 +82,26 @@ public class UserRepository {
 
     }
 
+    public Set<Role> getUserRoles(long userid) {
+        Session session = sessionFactory.getCurrentSession();
+        Users user = (Users) session.get(Users.class, userid);
+        return user.getRoles();
+    }
+
+    public void deleteUserRoles(long userid, long roleid) {
+        Session session = sessionFactory.getCurrentSession();
+        Users user = (Users) session.get(Users.class, userid);
+        Role role = (Role) session.get(Role.class, roleid);
+        user.getRoles().remove(role);
+        session.save(user);
+
+    }
+
+    public void addUserRoles(long userid, long roleid) {
+        Session session = sessionFactory.getCurrentSession();
+        Users user = (Users) session.get(Users.class, userid);
+        Role role = (Role) session.get(Role.class, roleid);
+        user.getRoles().add(role);
+        session.save(user);
+    }
 }
