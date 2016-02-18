@@ -13,7 +13,8 @@ import javax.persistence.*;
  * @author Elena_Kholkina
  */
 @Entity
-@Table(name = "users")
+@Table(name = "users",
+uniqueConstraints = @UniqueConstraint(columnNames = {"login"}))
 public class Users {
 
     @Id
@@ -22,7 +23,7 @@ public class Users {
     private Long userid;
     @Column(name = "username")
     private String username;
-    @Column(name = "login")
+    @Column(name = "login")   
     private String login;
     @Column(name = "password")
     private String password;
@@ -75,7 +76,6 @@ public class Users {
         this.password = password;
     }
 
-   
     public Set<Role> getRoles() {
         return roles;
     }

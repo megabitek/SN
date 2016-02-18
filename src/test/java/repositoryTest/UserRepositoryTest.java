@@ -5,10 +5,13 @@
  */
 package repositoryTest;
 
+import entity.Users;
 import javax.annotation.Resource;
 import javax.transaction.Transactional;
+import junit.framework.Assert;
 import org.hibernate.SessionFactory;
 import org.junit.Test;
+import org.junit.internal.AssumptionViolatedException;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -25,13 +28,45 @@ import repository.UserRepository;
 public class UserRepositoryTest {
 
     @Resource(name = "sessionFactory")
-    private SessionFactory exampleSessionFactory;
+    private SessionFactory sessionFactory;
     @Autowired
-    private UserRepository employeeDAO;
+    private UserRepository userrepo;
 
     @Test
-    public static void testAddUser() {
-        
+    public void testAddUser() {
+        int count = userrepo.listUsers().size();
+        userrepo.addUser("lena", "lena", "123");
+        Assert.assertEquals(count + 1, userrepo.listUsers().size());
     }
 
+    @Test
+    public void testUpdateUser() {
+        long userid = userrepo.addUser("lena", "lena", "123");
+        userrepo.updateUser(userid, "456");
+        Users lena = userrepo.getUserById(userid);
+        Assert.assertEquals("456", lena.getPassword());
+    }
+
+    @Test
+    public void testDeleteUser() {
+        long userid = userrepo.addUser("lena", "lena", "123");
+        int count = userrepo.listUsers().size();
+        userrepo.deleteUser(userid);
+        Assert.assertEquals(userrepo.listUsers().size(), count - 1);
+    }
+
+    @Test
+    public void testGetById() {
+        long userid = userrepo.addUser("lena", "lena", "123");
+        Users userget = userrepo.getUserById(userid);
+        Assert.assertNotNull(userget);
+    }
+
+    /*@Test (expected=AssertionError.class)
+    public void testUniqueLogin() {
+        int count = userrepo.listUsers().size();
+        long userid = userrepo.addUser("lena", "lena", "123");
+        long userid2 = userrepo.addUser("lena", "lena", "123");
+    //    Assert.fail();
+    }*/
 }

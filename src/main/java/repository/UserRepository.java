@@ -82,6 +82,11 @@ public class UserRepository {
 
     }
 
+    public Users getUserById(long userid) {
+        Session session = sessionFactory.getCurrentSession();
+        return (Users) session.get(Users.class, userid);
+    }
+
     public Set<Role> getUserRoles(long userid) {
         Session session = sessionFactory.getCurrentSession();
         Users user = (Users) session.get(Users.class, userid);
