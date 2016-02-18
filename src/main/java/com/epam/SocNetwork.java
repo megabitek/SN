@@ -1,6 +1,7 @@
 package com.epam;
 
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.dao.DataIntegrityViolationException;
 import repository.RoleRepository;
 import repository.UserRepository;
 
@@ -16,8 +17,13 @@ public class SocNetwork {
         ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext(
                 "spring-context.xml");
         UserRepository userrepo = (UserRepository) ctx.getBean("userRepo");
+        try{
         long user = userrepo.addUser("lena", "lena", "123");
-        long user1 = userrepo.addUser("lena", "lena", "123");
+        //long user1 = userrepo.addUser("lena", "lena", "123");
+        }catch (DataIntegrityViolationException e){
+            System.out.println("not added");
+        }
+        
         userrepo.listUsers();
         RoleRepository rolerepo = (RoleRepository) ctx.getBean("roleRepo");
         Long addRole = rolerepo.addRole("administrator");

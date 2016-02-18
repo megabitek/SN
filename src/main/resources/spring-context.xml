@@ -17,33 +17,29 @@
 
 	
     <tx:annotation-driven transaction-manager="transactionManager" />	
-    
-  
-
+   
     <bean id ="userRepo" class = "repository.UserRepository"
           p:sessionFactory-ref = "sessionFactory"/>
     
-     <bean id ="roleRepo" class = "repository.RoleRepository"
-          p:sessionFactory-ref = "sessionFactory"/>
+    <bean id ="roleRepo" class = "repository.RoleRepository"
+           p:sessionFactory-ref = "sessionFactory"/>
     
     <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean"
           p:dataSource-ref="dataSource"
           p:configLocation="hibernate.cfg.xml"
     />
-    
-    <bean id="persistenceExceptionTranslationPostProcessor" class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
         
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
-    destroy-method="close"
-    p:driverClass="${app.jdbc.driverClassName}"
-    p:jdbcUrl="${app.jdbc.url}"
-    p:user="${app.jdbc.username}"
-    p:password="${app.jdbc.password}"
-    p:acquireIncrement="5"
-    p:idleConnectionTestPeriod="60"
-    p:maxPoolSize="100"
-    p:maxStatements="50"
-    p:minPoolSize="10" />
+          destroy-method="close"
+          p:driverClass="${app.jdbc.driverClassName}"
+          p:jdbcUrl="${app.jdbc.url}"
+          p:user="${app.jdbc.username}"
+          p:password="${app.jdbc.password}"
+          p:acquireIncrement="5"
+          p:idleConnectionTestPeriod="60"
+          p:maxPoolSize="100"
+          p:maxStatements="50"
+          p:minPoolSize="10" />
 
 
     <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager" 

@@ -7,6 +7,7 @@ package repository;
 
 import entity.Role;
 import entity.Users;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -47,11 +48,7 @@ public class UserRepository {
         Session session = sessionFactory.getCurrentSession();
         Long employeeID;
         Users user = new Users(username, login, password);
-        try {
-            employeeID = (Long) session.save(user);
-        } catch (DataIntegrityViolationException e) {
-            return null;
-        };
+        employeeID = (Long) session.save(user);
         return employeeID;
     }
 

@@ -54,11 +54,11 @@ public class RoleRepository {
         Session session = sessionFactory.getCurrentSession();
 
         List<Role> roles = new ArrayList();
-        roles = session.createQuery("FROM Users").list();
+        roles = session.createQuery("FROM Role").list();
 
         for (Role role : roles) {
 
-            System.out.println("Password: " + role.getTitle());
+            System.out.println("role title: " + role.getTitle());
         }
 
         return roles;

@@ -35,13 +35,13 @@ public class UserRepositoryTest {
     @Test
     public void testAddUser() {
         int count = userrepo.listUsers().size();
-        userrepo.addUser("lena", "lena", "123");
+        userrepo.addUser("lena", "lenaTest", "123");
         Assert.assertEquals(count + 1, userrepo.listUsers().size());
     }
 
     @Test
     public void testUpdateUser() {
-        long userid = userrepo.addUser("lena", "lena", "123");
+        long userid = userrepo.addUser("lena", "lenaTest", "123");
         userrepo.updateUser(userid, "456");
         Users lena = userrepo.getUserById(userid);
         Assert.assertEquals("456", lena.getPassword());
@@ -49,7 +49,7 @@ public class UserRepositoryTest {
 
     @Test
     public void testDeleteUser() {
-        long userid = userrepo.addUser("lena", "lena", "123");
+        long userid = userrepo.addUser("lena", "lenaTest", "123");
         int count = userrepo.listUsers().size();
         userrepo.deleteUser(userid);
         Assert.assertEquals(userrepo.listUsers().size(), count - 1);
@@ -57,7 +57,7 @@ public class UserRepositoryTest {
 
     @Test
     public void testGetById() {
-        long userid = userrepo.addUser("lena", "lena", "123");
+        long userid = userrepo.addUser("lena", "lenaTest", "123");
         Users userget = userrepo.getUserById(userid);
         Assert.assertNotNull(userget);
     }

@@ -5,26 +5,23 @@
  */
 package entity;
 
-import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 /**
  *
  * @author Elena_Kholkina
  */
 @Entity
-@Table(name = "role")
+@Table(name = "role",
+uniqueConstraints = @UniqueConstraint(columnNames = {"title"}))
 
 public class Role {
 
