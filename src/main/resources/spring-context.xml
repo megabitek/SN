@@ -17,7 +17,9 @@
 
 	
     <tx:annotation-driven transaction-manager="transactionManager" />	
-   
+    
+  
+
     <bean id ="userRepo" class = "repository.UserRepository"
           p:sessionFactory-ref = "sessionFactory"/>
     
@@ -28,6 +30,8 @@
           p:dataSource-ref="dataSource"
           p:configLocation="hibernate.cfg.xml"
     />
+    
+    <bean id="persistenceExceptionTranslationPostProcessor" class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
         
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
     destroy-method="close"

@@ -3,12 +3,22 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package service;
+/*package service;
+
+import javax.annotation.Resource;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import repository.UserRepository;
 
 /**
  *
  * @author Elena_Kholkina
- */
+ *//*
+@Service
 public class UserService {
-    
-}
+
+    @Autowired
+    @Resource(name = "userRepo")
+    private UserRepository repo;
+
+}*/

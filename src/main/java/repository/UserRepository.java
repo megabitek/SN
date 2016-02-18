@@ -15,6 +15,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -44,12 +45,12 @@ public class UserRepository {
     public Long addUser(String username, String login, String password) {
 
         Session session = sessionFactory.getCurrentSession();
-        Long employeeID = null;
+        Long employeeID;
         Users user = new Users(username, login, password);
         try {
             employeeID = (Long) session.save(user);
-        } catch (ConstraintViolationException e) {
-            
+        } catch (DataIntegrityViolationException e) {
+            return null;
         };
         return employeeID;
     }
