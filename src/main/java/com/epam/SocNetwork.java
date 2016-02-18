@@ -26,7 +26,11 @@ public class SocNetwork {
         
         userrepo.listUsers();
         RoleRepository rolerepo = (RoleRepository) ctx.getBean("roleRepo");
+        try{
         Long addRole = rolerepo.addRole("administrator");
+         }catch (DataIntegrityViolationException e){
+            System.out.println("not added");
+        }
         rolerepo.listRoles();
     }
 }

@@ -14,6 +14,7 @@ import org.junit.Test;
 import org.junit.internal.AssumptionViolatedException;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import repository.UserRepository;
@@ -61,12 +62,11 @@ public class UserRepositoryTest {
         Users userget = userrepo.getUserById(userid);
         Assert.assertNotNull(userget);
     }
-
-   /* @Test 
+/*
+   @Test  (expected =java.lang.AssertionError.class)
     public void testUniqueLogin() {
         int count = userrepo.listUsers().size();
-        long userid = userrepo.addUser("lena", "lena", "123");
-        long userid2 = userrepo.addUser("lena", "lena", "123");
-        Assert.assertNull(userid2);
-    }*/
-}
+        long userid = userrepo.addUser("lena", "lena", "123"); 
+      Assert.assertNull(userid);
+    }
+*/}
