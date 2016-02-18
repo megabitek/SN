@@ -5,185 +5,68 @@
  */
 package repositoryTest;
 
-import entity.Role;
 import entity.Users;
-import java.util.List;
-import java.util.Set;
+import javax.annotation.Resource;
+import javax.transaction.Transactional;
+import junit.framework.Assert;
 import org.hibernate.SessionFactory;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.internal.AssumptionViolatedException;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import repository.UserRepository;
-import static org.junit.Assert.*;
 
 /**
  *
  * @author Elena_Kholkina
  */
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = "classpath:spring-context.xml")
+@Transactional
 public class UserRepositoryTest {
-    
-    public UserRepositoryTest() {
-    }
-    
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
-    @Before
-    public void setUp() {
-    }
-    
-    @After
-    public void tearDown() {
-    }
 
-    /**
-     * Test of getSessionFactory method, of class UserRepository.
-     */
-    @Test
-    public void testGetSessionFactory() {
-        System.out.println("getSessionFactory");
-        UserRepository instance = new UserRepository();
-        SessionFactory expResult = null;
-        SessionFactory result = instance.getSessionFactory();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+    @Resource(name = "sessionFactory")
+    private SessionFactory sessionFactory;
+    @Autowired
+    private UserRepository userrepo;
 
-    /**
-     * Test of setSessionFactory method, of class UserRepository.
-     */
-    @Test
-    public void testSetSessionFactory() {
-        System.out.println("setSessionFactory");
-        SessionFactory sessionFactory = null;
-        UserRepository instance = new UserRepository();
-        instance.setSessionFactory(sessionFactory);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of addUser method, of class UserRepository.
-     */
     @Test
     public void testAddUser() {
-        System.out.println("addUser");
-        String username = "";
-        String login = "";
-        String password = "";
-        UserRepository instance = new UserRepository();
-        Long expResult = null;
-        Long result = instance.addUser(username, login, password);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        int count = userrepo.listUsers().size();
+        userrepo.addUser("lena", "lena", "123");
+        Assert.assertEquals(count + 1, userrepo.listUsers().size());
     }
 
-    /**
-     * Test of listUsers method, of class UserRepository.
-     */
-    @Test
-    public void testListUsers() {
-        System.out.println("listUsers");
-        UserRepository instance = new UserRepository();
-        List<Users> expResult = null;
-        List<Users> result = instance.listUsers();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of updateUser method, of class UserRepository.
-     */
     @Test
     public void testUpdateUser() {
-        System.out.println("updateUser");
-        Long userid = null;
-        String password = "";
-        UserRepository instance = new UserRepository();
-        instance.updateUser(userid, password);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        long userid = userrepo.addUser("lena", "lena", "123");
+        userrepo.updateUser(userid, "456");
+        Users lena = userrepo.getUserById(userid);
+        Assert.assertEquals("456", lena.getPassword());
     }
 
-    /**
-     * Test of deleteUser method, of class UserRepository.
-     */
     @Test
     public void testDeleteUser() {
-        System.out.println("deleteUser");
-        long userid = 0L;
-        UserRepository instance = new UserRepository();
-        instance.deleteUser(userid);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        long userid = userrepo.addUser("lena", "lena", "123");
+        int count = userrepo.listUsers().size();
+        userrepo.deleteUser(userid);
+        Assert.assertEquals(userrepo.listUsers().size(), count - 1);
     }
 
-    /**
-     * Test of getUserById method, of class UserRepository.
-     */
     @Test
-    public void testGetUserById() {
-        System.out.println("getUserById");
-        long userid = 0L;
-        UserRepository instance = new UserRepository();
-        Users expResult = null;
-        Users result = instance.getUserById(userid);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void testGetById() {
+        long userid = userrepo.addUser("lena", "lena", "123");
+        Users userget = userrepo.getUserById(userid);
+        Assert.assertNotNull(userget);
     }
 
-    /**
-     * Test of getUserRoles method, of class UserRepository.
-     */
-    @Test
-    public void testGetUserRoles() {
-        System.out.println("getUserRoles");
-        long userid = 0L;
-        UserRepository instance = new UserRepository();
-        Set<Role> expResult = null;
-        Set<Role> result = instance.getUserRoles(userid);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of deleteUserRoles method, of class UserRepository.
-     */
-    @Test
-    public void testDeleteUserRoles() {
-        System.out.println("deleteUserRoles");
-        long userid = 0L;
-        long roleid = 0L;
-        UserRepository instance = new UserRepository();
-        instance.deleteUserRoles(userid, roleid);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of addUserRoles method, of class UserRepository.
-     */
-    @Test
-    public void testAddUserRoles() {
-        System.out.println("addUserRoles");
-        long userid = 0L;
-        long roleid = 0L;
-        UserRepository instance = new UserRepository();
-        instance.addUserRoles(userid, roleid);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-    
+   /* @Test 
+    public void testUniqueLogin() {
+        int count = userrepo.listUsers().size();
+        long userid = userrepo.addUser("lena", "lena", "123");
+        long userid2 = userrepo.addUser("lena", "lena", "123");
+        Assert.assertNull(userid2);
+    }*/
 }
