@@ -62,11 +62,11 @@ public class UserRepositoryTest {
         Assert.assertNotNull(userget);
     }
 
-    /*@Test (expected=AssertionError.class)
+   /* @Test 
     public void testUniqueLogin() {
         int count = userrepo.listUsers().size();
         long userid = userrepo.addUser("lena", "lena", "123");
         long userid2 = userrepo.addUser("lena", "lena", "123");
-    //    Assert.fail();
+        Assert.assertNull(userid2);
     }*/
 }

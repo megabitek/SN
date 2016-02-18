@@ -13,6 +13,7 @@ import java.util.Set;
 import javax.annotation.Resource;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -45,7 +46,11 @@ public class UserRepository {
         Session session = sessionFactory.getCurrentSession();
         Long employeeID = null;
         Users user = new Users(username, login, password);
-        employeeID = (Long) session.save(user);
+        try {
+            employeeID = (Long) session.save(user);
+        } catch (ConstraintViolationException e) {
+            
+        };
         return employeeID;
     }
 
