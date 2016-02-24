@@ -9,6 +9,7 @@ import entity.Role;
 import entity.Users;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import javax.annotation.Resource;
@@ -43,11 +44,9 @@ public class UserRepository {
         this.sessionFactory = sessionFactory;
     }
 
-    public Long addUser(String username, String login, String password) {
-
+    public Long addUsers(Users user) {
         Session session = sessionFactory.getCurrentSession();
         Long employeeID;
-        Users user = new Users(username, login, password);
         employeeID = (Long) session.save(user);
         return employeeID;
     }
@@ -91,9 +90,11 @@ public class UserRepository {
     }
 
     public Set<Role> getUserRoles(long userid) {
+        Set <Role> roles= new HashSet (); 
         Session session = sessionFactory.getCurrentSession();
         Users user = (Users) session.get(Users.class, userid);
-        return user.getRoles();
+        roles=  user.getRoles();
+        return roles;
     }
 
     public void deleteUserRoles(long userid, long roleid) {
@@ -112,4 +113,6 @@ public class UserRepository {
         user.getRoles().add(role);
         session.save(user);
     }
+    
+    
 }

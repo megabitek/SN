@@ -39,13 +39,10 @@ public class RoleRepository {
         this.sessionFactory = sessionFactory;
     }
 
-    
-    public Long addRole(String title) {
+    public Long addRole(Role role){
 
         Session session = sessionFactory.getCurrentSession();
-        Long roleID = null;
-        Role role = new Role(title);
-        roleID = (Long) session.save(role);
+        Long roleID = (Long) session.save(role);
         return roleID;
     }
 
@@ -78,6 +75,15 @@ public class RoleRepository {
         Role role
                 = (Role) session.get(Role.class, roleid);
         session.delete(role);
+    }
 
+    public Role getByID(long roleid) {
+        Session session = sessionFactory.getCurrentSession();
+        return (Role) session.get(Role.class, roleid);
+    }
+    
+      public Role getByTitle(String title) {
+        Session session = sessionFactory.getCurrentSession();
+        return (Role) session.get(Role.class, title);
     }
 }

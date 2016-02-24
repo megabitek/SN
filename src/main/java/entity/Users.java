@@ -5,6 +5,7 @@
  */
 package entity;
 
+import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.*;
 
@@ -33,7 +34,7 @@ public class Users {
                 @JoinColumn(name = "userid")},
             inverseJoinColumns = {
                 @JoinColumn(name = "roleid")})
-    private Set<Role> roles;
+    private Set<Role> roles = new HashSet();
 
     public Users() {
     }
