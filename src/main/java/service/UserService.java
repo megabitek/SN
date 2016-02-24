@@ -3,22 +3,35 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-/*package service;
+package service;
 
 import javax.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import repository.RoleRepository;
 import repository.UserRepository;
 
 /**
  *
  * @author Elena_Kholkina
- *//*
+ */
 @Service
+@Transactional
 public class UserService {
 
     @Autowired
     @Resource(name = "userRepo")
-    private UserRepository repo;
+    private UserRepository userrepo;
+    
+    @Autowired
+    @Resource(name = "roleRepo")
+    private RoleRepository rolerepo;
+    
 
-}*/
+    
+    public void addUserSN(String username, long roleUserSnID){
+        
+    
+    }
+}
