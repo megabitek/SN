@@ -19,7 +19,7 @@ import repository.UserRepository;
  *
  * @author Elena_Kholkina
  */
-@Service
+@Service("userservice")
 @Transactional
 public class UserService {
 
@@ -45,6 +45,8 @@ public class UserService {
         return userrepo.addUsers(user);
     }
 
+    public Users findUserByLoginAndPasword(String username, String password) {
+        return userrepo.getUserByLoginAndPassword(username, password);
+    }
+
 }
-
-

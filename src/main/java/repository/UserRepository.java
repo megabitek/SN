@@ -7,17 +7,16 @@ package repository;
 
 import entity.Role;
 import entity.Users;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import javax.annotation.Resource;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.exception.ConstraintViolationException;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -84,16 +83,24 @@ public class UserRepository {
 
     }
 
+    public Users getUserByLoginAndPassword(String login, String password) {
+        Session session = sessionFactory.getCurrentSession();
+        Criteria cr = session.createCriteria(Users.class);
+        cr.add(Restrictions.eq("login", login));
+        cr.add(Restrictions.eq("password", password));
+        return (Users) cr.uniqueResult();
+    }
+
     public Users getUserById(long userid) {
         Session session = sessionFactory.getCurrentSession();
         return (Users) session.get(Users.class, userid);
     }
 
     public Set<Role> getUserRoles(long userid) {
-        Set <Role> roles= new HashSet (); 
+        Set<Role> roles = new HashSet();
         Session session = sessionFactory.getCurrentSession();
         Users user = (Users) session.get(Users.class, userid);
-        roles=  user.getRoles();
+        roles = user.getRoles();
         return roles;
     }
 
@@ -113,6 +120,5 @@ public class UserRepository {
         user.getRoles().add(role);
         session.save(user);
     }
-    
-    
+
 }
